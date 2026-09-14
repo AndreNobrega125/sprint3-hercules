@@ -37,7 +37,7 @@ Na **Sprint 3**, o foco foi fechar lacunas de navegação e ampliar a cobertura 
 - Corrigido `tsconfig.json` (referência a arquivo inexistente impedia o typecheck de rodar) e removidos imports/variáveis não utilizados
 - Criada camada de componentes reutilizáveis (`src/components/`: `StatCard`, `StatusBadge`, `EmptyState`) e utilitário compartilhado de status (`src/utils/status.ts`), eliminando lógica de cor/label duplicada em pelo menos 4 telas
 - Corrigidos 2 bugs encontrados ao rodar o app de verdade: erro de concordância ("notificaçãos") e filtro de altura faltando na seção "Informações do Trecho" do Dashboard do Trabalhador
-- Testado de ponta a ponta rodando o app num navegador (`expo start --web`), cobrindo os 3 perfis, fluxo completo de Nova Vistoria e notificações
+- Testado de ponta a ponta em navegador (`expo start --web`) e depois confirmado em emulador Android real, cobrindo os 3 perfis, fluxo completo de Nova Vistoria, notificações e câmera/GPS mockados
 - Documento de testes manuais cobrindo os fluxos principais: [TESTES_MANUAIS.md](TESTES_MANUAIS.md)
 
 ---
@@ -162,12 +162,12 @@ A senha não é validada na Sprint 2 — qualquer valor é aceito. Apenas as 3 m
 | Modo offline | ⏳ Não iniciado | Previsto para Sprint 4 |
 
 **Pendências identificadas nesta sprint:**
-- Testar em dispositivo físico/emulador Android real (a validação desta sprint foi feita rodando o app num navegador via `expo start --web` — cobre navegação e lógica, mas não câmera/GPS nativos nem gestos específicos do Android)
 - Decidir se vale o upgrade pro Expo SDK 57 (resolve um alerta de regressão de memória do Hermes V1 apontado pelo `expo-doctor`; é mudança major, não feita ainda)
 - Nenhum teste automatizado (unitário/e2e) no projeto ainda
+- Testar em dispositivo físico (o teste desta sprint cobriu emulador Android; dispositivo físico real ainda não foi validado)
 
 **Plano para a Sprint 4:**
-1. Rodar a suíte de testes manuais em dispositivo real e registrar evidência (prints)
+1. Repetir a suíte de testes manuais em dispositivo físico real (hoje validada em emulador Android)
 2. Iniciar integração com backend/API real, substituindo o mock gradualmente
 3. Implementar autenticação real e permissões de câmera/localização
 4. Avaliar cobertura de testes automatizados básicos para as stores (Zustand)

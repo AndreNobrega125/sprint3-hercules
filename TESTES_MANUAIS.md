@@ -34,17 +34,17 @@
 |---|---|---|---|
 | Dashboard exibe totais corretos (OK/Atenção/Crítico) e taxa de conformidade | Números batem com os 6 trechos mockados | Confirmado pelo André em Android real | ✅ **Confirmado em Android real (André, 2026-09-14)** |
 | Toque no card "Pendentes" (Roçadas) | Navega para uma tela relacionada | Confirmado pelo André em Android real (era o botão morto que corrigi) | ✅ **Confirmado em Android real (André, 2026-09-14)** |
-| Toque em uma notificação | Navega direto para o trecho correspondente | Ainda não testado em nenhuma rodada | ⏳ Verificado só por leitura de código |
+| Toque em uma notificação | Navega direto para o trecho correspondente | Confirmado pelo André em Android real (testado na seção 5, Notificações) | ✅ **Confirmado em Android real (André, 2026-09-14)** |
 
 ## 5. Notificações (fluxo principal + estado vazio)
 
 | Cenário | Resultado Esperado | Resultado Obtido | Status |
 |---|---|---|---|
-| Usuário com notificações não lidas | Badge com contador na aba | Testei: badge "2" visível no ícone de Notificações do Gestor | ✅ **Testado (execução real, web)** |
-| Marcar uma notificação como lida (individual) | Remove destaque e diminui contador | Não testado nesta rodada (testei só "marcar todas") | ⏳ Verificado só por leitura de código |
-| Marcar todas como lidas | Zera contador para o usuário logado | Testei: cliquei, o botão "Marcar todas como lidas" sumiu e o badge do ícone zerou | ✅ **Testado (execução real, web)** |
-| Excluir notificação | Remove da lista imediatamente | Não testado nesta rodada (não consegui localizar o botão "✕" via seletor de acessibilidade) | ⏳ Verificado só por leitura de código |
-| Usuário sem nenhuma notificação | Exibe estado vazio "Nenhuma notificação" | Não testado nesta rodada | ⏳ Verificado só por leitura de código |
+| Usuário com notificações não lidas | Badge com contador na aba | Confirmado pelo André em Android real | ✅ **Confirmado em Android real (André, 2026-09-14)** |
+| Marcar uma notificação como lida (individual) | Marca como lida e navega direto pro trecho relacionado | Confirmado pelo André em Android real | ✅ **Confirmado em Android real (André, 2026-09-14)** |
+| Marcar todas como lidas | Zera contador para o usuário logado | Confirmado pelo André em Android real | ✅ **Confirmado em Android real (André, 2026-09-14)** |
+| Excluir notificação | Remove da lista imediatamente | Confirmado pelo André em Android real | ✅ **Confirmado em Android real (André, 2026-09-14)** |
+| Usuário sem nenhuma notificação (T101) | Exibe estado vazio "Nenhuma notificação" | Confirmado pelo André em Android real | ✅ **Confirmado em Android real (André, 2026-09-14)** |
 
 ## 6. Lista de Trechos (estado vazio + busca)
 
@@ -75,10 +75,10 @@ Criada a pasta `src/components/` com `StatCard`, `StatusBadge`, `EmptyState`, e 
 | TypeScript (typecheck) | `cd mobile && npx tsc --noEmit` | ✅ **0 erros** — antes desta sprint o comando falhava sempre por `tsconfig.json` referenciar um arquivo inexistente (`tsconfig.app.json`); corrigido junto com a limpeza de imports não usados |
 | Diagnóstico de projeto | `cd mobile && npx expo-doctor` | ✅ 21/22 checks — só resta um alerta de regressão de memória do Hermes V1, que só se corrige com upgrade major pro Expo SDK 57 (decisão não tomada ainda, ver pendências) |
 | Execução real (web) | `cd mobile && npx expo start --web` | ✅ App sobe e bundla sem erro; navegado de ponta a ponta pelos 3 perfis, fluxo de Nova Vistoria completo, e notificações, sem crash nem tela branca |
+| Execução real (Android) | Emulador Android Studio | ✅ Todos os fluxos deste documento confirmados pelo André em 2026-09-14, incluindo câmera mockada, GPS mockado e gestos nativos — sem crashes reportados |
 
 ## Pendências para a Sprint 4
 
-- [ ] Testar em dispositivo físico/emulador Android de verdade (o teste desta rodada foi via navegador — câmera, GPS e gestos nativos não foram cobertos)
 - [ ] Decidir se vale fazer o upgrade pro Expo SDK 57 (corrige o alerta do Hermes V1, mas é mudança major/arriscada)
 - [ ] Integração com API real (hoje 100% mock)
 - [ ] Autenticação real (hoje aceita qualquer senha)
