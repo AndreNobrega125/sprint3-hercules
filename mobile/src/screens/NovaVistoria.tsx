@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   View,
   Text,
@@ -13,6 +13,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { useDataStore } from '../context/dataStore';
 import { useAuthStore } from '../context/authStore';
 import { Vistoria } from '../types';
+import { classifyHeight, getStatusColor, getStatusLabel } from '../utils/status';
 
 export function NovaVistoria() {
   const navigation = useNavigation<any>();
@@ -77,15 +78,7 @@ export function NovaVistoria() {
       return;
     }
 
-    const statusMap = {
-      ok: alturaNum <= 10,
-      atencao: alturaNum > 10 && alturaNum < 30,
-      critico: alturaNum >= 30
-    };
-
-    const novoStatus = Object.keys(statusMap).find(
-      key => statusMap[key as keyof typeof statusMap]
-    ) as 'ok' | 'atencao' | 'critico';
+    const novoStatus = classifyHeight(alturaNum);
 
     const vistoria: Vistoria = {
       id: `vistoria-${Date.now()}`,
@@ -118,18 +111,6 @@ export function NovaVistoria() {
     setAltura('');
     setObservacoes('');
     setFotoCapturada(false);
-  };
-
-  const getStatusColor = (altura: number) => {
-    if (altura <= 10) return '#4caf50';
-    if (altura < 30) return '#ff9800';
-    return '#f44336';
-  };
-
-  const getStatusLabel = (altura: number) => {
-    if (altura <= 10) return 'OK';
-    if (altura < 30) return 'ATENÇÃO';
-    return 'CRÍTICO';
   };
 
   return (
@@ -236,13 +217,13 @@ export function NovaVistoria() {
                   style={[
                     styles.statusCard,
                     {
-                      backgroundColor: getStatusColor(parseFloat(altura))
+                      backgroundColor: getStatusColor(classifyHeight(parseFloat(altura)))
                     }
                   ]}
                 >
                   <Text style={styles.statusCardLabel}>Status</Text>
                   <Text style={styles.statusCardValue}>
-                    {getStatusLabel(parseFloat(altura))}
+                    {getStatusLabel(classifyHeight(parseFloat(altura)))}
                   </Text>
                   <Text style={styles.statusCardHeight}>
                     {parseFloat(altura).toFixed(1)}cm

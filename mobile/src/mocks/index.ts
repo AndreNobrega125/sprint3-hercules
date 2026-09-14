@@ -108,6 +108,21 @@ export const mockTrechos: Trecho[] = [
     responsavel: 'João Fiscal',
     latitude: -23.4880,
     longitude: -46.8940
+  },
+  {
+    id: '6',
+    codigo: 'SP280-KM75',
+    endereco: 'Rodovia Castelo Branco, km 75',
+    municipio: 'Cotia',
+    km_inicio: 74.5,
+    km_fim: 75.5,
+    regional: 'Regional Oeste',
+    status: 'atencao',
+    altura_atual: 18,
+    data_ultima_vistoria: '',
+    responsavel: 'Não atribuído',
+    latitude: -23.4790,
+    longitude: -46.9190
   }
 ];
 
@@ -200,6 +215,26 @@ export const mockIntervencoes: Intervencao[] = [
     prioridade: 'alta',
     status: 'pendente',
     observacoes: 'Roçada imediata - altura crítica'
+  },
+  {
+    id: '5',
+    vistoria_id: '',
+    trecho_id: '6',
+    tipo: 'rocada',
+    data_recomendada: '',
+    prioridade: 'media',
+    status: 'pendente',
+    observacoes: 'Trecho aguardando primeira vistoria do fiscal'
+  },
+  {
+    id: '6',
+    vistoria_id: '2',
+    trecho_id: '2',
+    tipo: 'rocada',
+    data_recomendada: formatDate(tomorrow),
+    prioridade: 'media',
+    status: 'em_progresso',
+    observacoes: 'Equipe já deslocada para o trecho'
   }
 ];
 
@@ -244,7 +279,5 @@ export function getUserRole(matricula: string): 'gestor' | 'fiscal' | 'trabalhad
 
 export function getMockUserByMatricula(matricula: string): User | undefined {
   const role = getUserRole(matricula);
-  const rolePrefix = role === 'gestor' ? '1' : role === 'fiscal' ? '2' : '3';
-
   return mockUsers.find(u => u.role === role);
 }

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
   View,
   Text,
@@ -11,6 +11,7 @@ import {
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useDataStore } from '../context/dataStore';
 import { Trecho } from '../types';
+import { StatusBadge } from '../components/StatusBadge';
 
 export function ListaTrechos() {
   const navigation = useNavigation<any>();
@@ -43,32 +44,6 @@ export function ListaTrechos() {
     return resultado;
   }, [trechos, filtro, ordenacao]);
 
-  const statusColor = (status: string) => {
-    switch (status) {
-      case 'ok':
-        return '#4caf50';
-      case 'atencao':
-        return '#ff9800';
-      case 'critico':
-        return '#f44336';
-      default:
-        return '#999';
-    }
-  };
-
-  const statusLabel = (status: string) => {
-    switch (status) {
-      case 'ok':
-        return 'OK';
-      case 'atencao':
-        return 'ATENÇÃO';
-      case 'critico':
-        return 'CRÍTICO';
-      default:
-        return status;
-    }
-  };
-
   const renderTrecho = ({ item }: { item: Trecho }) => {
     const isPendente = item.status === 'critico' || item.status === 'atencao';
     const highlightStyle = highlightPendentes && isPendente ? styles.trechoCardHighlight : {};
@@ -88,14 +63,7 @@ export function ListaTrechos() {
         </View>
 
         <View style={styles.statusSection}>
-          <View
-            style={[
-              styles.statusBadge,
-              { backgroundColor: statusColor(item.status) }
-            ]}
-          >
-            <Text style={styles.statusText}>{statusLabel(item.status)}</Text>
-          </View>
+          <StatusBadge status={item.status} />
           <Text style={styles.altura}>{item.altura_atual}cm</Text>
         </View>
       </View>
@@ -105,7 +73,7 @@ export function ListaTrechos() {
           km {item.km_inicio.toFixed(1)} - {item.km_fim.toFixed(1)}
         </Text>
         <Text style={styles.dataVistoria}>
-          {item.data_ultima_vistoria}
+          {item.data_ultima_vistoria || 'Nunca vistoriado'}
         </Text>
       </View>
     </TouchableOpacity>
@@ -287,18 +255,6 @@ const styles = StyleSheet.create({
   statusSection: {
     alignItems: 'center',
     gap: 4
-  },
-  statusBadge: {
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 4,
-    minWidth: 70
-  },
-  statusText: {
-    color: '#fff',
-    fontSize: 10,
-    fontWeight: 'bold',
-    textAlign: 'center'
   },
   altura: {
     fontSize: 12,

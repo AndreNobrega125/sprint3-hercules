@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import {
   View,
   Text,
@@ -7,7 +6,7 @@ import {
   SafeAreaView,
   TouchableOpacity
 } from 'react-native';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { useNotificationStore } from '../context/notificationStore';
 import { useAuthStore } from '../context/authStore';
 import { Notificacao } from '../types';
@@ -16,12 +15,6 @@ export function NotificacoesScreen() {
   const navigation = useNavigation<any>();
   const user = useAuthStore(state => state.user);
   const notificacoes = useNotificationStore(state => state.notificacoes);
-
-  // Recarrega notificações quando a tela ganha foco
-  useFocusEffect(() => {
-    // Força atualização dos dados
-    return;
-  });
   const markAsRead = useNotificationStore(state => state.markAsRead);
   const markAllAsRead = useNotificationStore(
     state => state.markAllAsRead

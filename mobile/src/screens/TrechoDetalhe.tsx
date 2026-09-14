@@ -1,4 +1,3 @@
-import React, { useFocusEffect } from 'react';
 import {
   View,
   Text,
@@ -8,10 +7,11 @@ import {
   TouchableOpacity,
   FlatList
 } from 'react-native';
-import { useNavigation, useFocusEffect as useNavFocusEffect } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { useDataStore } from '../context/dataStore';
 import { useAuthStore } from '../context/authStore';
 import { Vistoria } from '../types';
+import { getStatusColor } from '../utils/status';
 
 interface TrechoDetalheProps {
   trechoId: string;
@@ -26,12 +26,6 @@ export function TrechoDetalhe({ trechoId }: TrechoDetalheProps) {
     state.getIntervencoesByTrecho(trechoId)
   );
 
-  // Recarrega dados quando a tela ganha foco
-  useNavFocusEffect(() => {
-    // Força atualização recarregando os dados
-    return;
-  });
-
   if (!trecho) {
     return (
       <SafeAreaView style={styles.container}>
@@ -42,11 +36,7 @@ export function TrechoDetalhe({ trechoId }: TrechoDetalheProps) {
     );
   }
 
-  const statusColor = {
-    ok: '#4caf50',
-    atencao: '#ff9800',
-    critico: '#f44336'
-  }[trecho.status];
+  const statusColor = getStatusColor(trecho.status);
 
   const renderVistoria = ({ item }: { item: Vistoria }) => (
     <View style={styles.vistoriaCard}>
@@ -109,7 +99,7 @@ export function TrechoDetalhe({ trechoId }: TrechoDetalheProps) {
             <View style={styles.detailCard}>
               <Text style={styles.detailLabel}>Última Vistoria</Text>
               <Text style={styles.detailValue}>
-                {trecho.data_ultima_vistoria}
+                {trecho.data_ultima_vistoria || 'Nunca vistoriado'}
               </Text>
             </View>
             <View style={styles.detailCard}>
@@ -168,7 +158,7 @@ export function TrechoDetalhe({ trechoId }: TrechoDetalheProps) {
                   </Text>
                 </View>
                 <Text style={styles.intervencaoData}>
-                  Data Recomendada: {intervencao.data_recomendada}
+                  Data Recomendada: {intervencao.data_recomendada || 'A definir'}
                 </Text>
                 <Text style={styles.intervencaoPrioridade}>
                   Prioridade:{' '}

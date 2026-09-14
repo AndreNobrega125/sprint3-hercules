@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { User, UserRole } from '../types';
+import { User } from '../types';
 import { getMockUserByMatricula, getUserRole } from '../mocks';
 
 interface AuthStore {

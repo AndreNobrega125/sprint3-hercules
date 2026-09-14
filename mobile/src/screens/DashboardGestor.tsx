@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import {
   View,
   Text,
@@ -11,6 +11,8 @@ import { useNavigation } from '@react-navigation/native';
 import { useDataStore } from '../context/dataStore';
 import { useAuthStore } from '../context/authStore';
 import { useNotificationStore } from '../context/notificationStore';
+import { StatCard } from '../components/StatCard';
+import { EmptyState } from '../components/EmptyState';
 
 export function DashboardGestor() {
   const navigation = useNavigation<any>();
@@ -46,18 +48,9 @@ export function DashboardGestor() {
           <Text style={styles.sectionTitle}>Visão Geral</Text>
 
           <View style={styles.statGrid}>
-            <View style={[styles.statCard, { backgroundColor: '#4caf50' }]}>
-              <Text style={styles.statValue}>{stats.ok}</Text>
-              <Text style={styles.statLabel}>OK</Text>
-            </View>
-            <View style={[styles.statCard, { backgroundColor: '#ff9800' }]}>
-              <Text style={styles.statValue}>{stats.atencao}</Text>
-              <Text style={styles.statLabel}>Atenção</Text>
-            </View>
-            <View style={[styles.statCard, { backgroundColor: '#f44336' }]}>
-              <Text style={styles.statValue}>{stats.critico}</Text>
-              <Text style={styles.statLabel}>Crítico</Text>
-            </View>
+            <StatCard value={stats.ok} label="OK" color="#4caf50" />
+            <StatCard value={stats.atencao} label="Atenção" color="#ff9800" />
+            <StatCard value={stats.critico} label="Crítico" color="#f44336" />
           </View>
 
           <View style={styles.conformanceCard}>
@@ -77,7 +70,10 @@ export function DashboardGestor() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Roçadas</Text>
 
-          <TouchableOpacity style={styles.actionCard}>
+          <TouchableOpacity
+            style={styles.actionCard}
+            onPress={() => navigation.navigate('ListaTrechosTab', { highlight: 'pendentes' })}
+          >
             <View style={styles.actionHeader}>
               <Text style={styles.actionTitle}>Pendentes</Text>
               <Text style={[styles.actionCount, { color: '#f44336' }]}>
@@ -89,7 +85,10 @@ export function DashboardGestor() {
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={[styles.actionCard, { borderLeftColor: '#4caf50' }]}>
+          <TouchableOpacity
+            style={[styles.actionCard, { borderLeftColor: '#4caf50' }]}
+            onPress={() => navigation.navigate('ListaTrechosTab')}
+          >
             <View style={styles.actionHeader}>
               <Text style={styles.actionTitle}>Concluídas</Text>
               <Text style={[styles.actionCount, { color: '#4caf50' }]}>
@@ -119,9 +118,7 @@ export function DashboardGestor() {
               );
             })
           ) : (
-            <View style={styles.emptyCard}>
-              <Text style={styles.emptyText}>Nenhuma vistoria registrada</Text>
-            </View>
+            <EmptyState text="Nenhuma vistoria registrada" />
           )}
         </View>
 
@@ -138,7 +135,7 @@ export function DashboardGestor() {
             <View style={{ flex: 1 }}>
               <Text style={styles.notificationTitle}>
                 {unreadCount > 0
-                  ? `${unreadCount} notificação${unreadCount !== 1 ? 's' : ''} não lida${unreadCount !== 1 ? 's' : ''}`
+                  ? `${unreadCount} notifica${unreadCount !== 1 ? 'ções' : 'ção'} não lida${unreadCount !== 1 ? 's' : ''}`
                   : 'Todas as notificações lidas'}
               </Text>
               <Text style={styles.notificationDesc}>
@@ -199,24 +196,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 12,
     marginBottom: 12
-  },
-  statCard: {
-    flex: 1,
-    borderRadius: 8,
-    padding: 16,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  statValue: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#fff',
-    marginBottom: 4
-  },
-  statLabel: {
-    fontSize: 12,
-    color: '#fff',
-    fontWeight: '500'
   },
   conformanceCard: {
     backgroundColor: '#fff',
@@ -342,16 +321,6 @@ const styles = StyleSheet.create({
   },
   vistoriaData: {
     fontSize: 11,
-    color: '#999'
-  },
-  emptyCard: {
-    backgroundColor: '#f5f5f5',
-    borderRadius: 8,
-    padding: 20,
-    alignItems: 'center'
-  },
-  emptyText: {
-    fontSize: 12,
     color: '#999'
   }
 });

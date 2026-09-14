@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import {
   View,
   Text,
@@ -11,6 +11,8 @@ import {
 import { useDataStore } from '../context/dataStore';
 import { useAuthStore } from '../context/authStore';
 import { Trecho } from '../types';
+import { StatCard } from '../components/StatCard';
+import { StatusBadge } from '../components/StatusBadge';
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -32,12 +34,6 @@ export function DashboardFiscal() {
   }, [trechos, today]);
 
   const renderTrechoItem = ({ item }: { item: Trecho }) => {
-    const statusColor = {
-      ok: '#4caf50',
-      atencao: '#ff9800',
-      critico: '#f44336'
-    }[item.status];
-
     return (
       <TouchableOpacity
         style={styles.trechoCard}
@@ -50,21 +46,12 @@ export function DashboardFiscal() {
               {item.endereco}
             </Text>
           </View>
-          <View
-            style={[
-              styles.statusBadge,
-              { backgroundColor: statusColor }
-            ]}
-          >
-            <Text style={styles.statusText}>
-              {item.altura_atual}cm
-            </Text>
-          </View>
+          <StatusBadge status={item.status} text={`${item.altura_atual}cm`} />
         </View>
         <View style={styles.trechoFooter}>
           <Text style={styles.municipio}>{item.municipio}</Text>
           <Text style={styles.dataVistoria}>
-            Última: {item.data_ultima_vistoria}
+            {item.data_ultima_vistoria ? `Última: ${item.data_ultima_vistoria}` : 'Nunca vistoriado'}
           </Text>
         </View>
       </TouchableOpacity>
@@ -83,18 +70,9 @@ export function DashboardFiscal() {
           <Text style={styles.sectionTitle}>Resumo de Hoje</Text>
 
           <View style={styles.statGrid}>
-            <View style={[styles.statCard, { backgroundColor: '#2196f3' }]}>
-              <Text style={styles.statValue}>{stats.precisaVistoriar.length}</Text>
-              <Text style={styles.statLabel}>A Vistoriar</Text>
-            </View>
-            <View style={[styles.statCard, { backgroundColor: '#4caf50' }]}>
-              <Text style={styles.statValue}>{stats.vistoriados.length}</Text>
-              <Text style={styles.statLabel}>Hoje</Text>
-            </View>
-            <View style={[styles.statCard, { backgroundColor: '#666' }]}>
-              <Text style={styles.statValue}>{stats.total}</Text>
-              <Text style={styles.statLabel}>Total</Text>
-            </View>
+            <StatCard value={stats.precisaVistoriar.length} label="A Vistoriar" color="#2196f3" />
+            <StatCard value={stats.vistoriados.length} label="Hoje" color="#4caf50" />
+            <StatCard value={stats.total} label="Total" color="#666" />
           </View>
         </View>
 
@@ -211,24 +189,6 @@ const styles = StyleSheet.create({
     gap: 12,
     marginBottom: 12
   },
-  statCard: {
-    flex: 1,
-    borderRadius: 8,
-    padding: 12,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  statValue: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#fff',
-    marginBottom: 4
-  },
-  statLabel: {
-    fontSize: 12,
-    color: '#fff',
-    fontWeight: '500'
-  },
   trechoCard: {
     backgroundColor: '#fff',
     borderRadius: 8,
@@ -252,17 +212,6 @@ const styles = StyleSheet.create({
   trechoEndereco: {
     fontSize: 12,
     color: '#666'
-  },
-  statusBadge: {
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 4,
-    marginLeft: 8
-  },
-  statusText: {
-    color: '#fff',
-    fontSize: 11,
-    fontWeight: 'bold'
   },
   trechoFooter: {
     flexDirection: 'row',

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   View,
   Text,
@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   StyleSheet,
   SafeAreaView,
-  Image,
   Alert
 } from 'react-native';
 import { useAuthStore } from '../context/authStore';
@@ -24,6 +23,11 @@ export function LoginScreen() {
     const success = login(matricula);
     if (success) {
       setMatricula('');
+    } else {
+      Alert.alert(
+        'Matrícula não reconhecida',
+        'Use G101 (Gestor), F101 (Fiscal) ou T101 (Trabalhador).'
+      );
     }
   };
 

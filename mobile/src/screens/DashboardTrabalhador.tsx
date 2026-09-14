@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import {
   View,
   Text,
@@ -9,13 +9,12 @@ import {
   FlatList,
   Alert
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { useDataStore } from '../context/dataStore';
 import { useAuthStore } from '../context/authStore';
 import { Intervencao, Trecho } from '../types';
+import { StatCard } from '../components/StatCard';
 
 export function DashboardTrabalhador() {
-  const navigation = useNavigation<any>();
   const user = useAuthStore(state => state.user);
   const intervencoes = useDataStore(state => state.intervencoes);
   const trechos = useDataStore(state => state.trechos);
@@ -43,7 +42,7 @@ export function DashboardTrabalhador() {
 
     const trechosParaRocada = pendentes
       .map(int => trechos.find(t => t.id === int.trecho_id))
-      .filter((t): t is Trecho => t !== undefined);
+      .filter((t): t is Trecho => t !== undefined && t.altura_atual > 30);
 
     return { pendentes, emProgresso, concluidas, prontoParaRocada, aguardandoFiscal, trechosParaRocada };
   }, [intervencoes, trechos]);
@@ -118,18 +117,9 @@ export function DashboardTrabalhador() {
           <Text style={styles.sectionTitle}>Tarefas de Hoje</Text>
 
           <View style={styles.statGrid}>
-            <View style={[styles.statCard, { backgroundColor: '#f44336' }]}>
-              <Text style={styles.statValue}>{stats.pendentes.length}</Text>
-              <Text style={styles.statLabel}>Pendentes</Text>
-            </View>
-            <View style={[styles.statCard, { backgroundColor: '#ff9800' }]}>
-              <Text style={styles.statValue}>{stats.emProgresso.length}</Text>
-              <Text style={styles.statLabel}>Em Andamento</Text>
-            </View>
-            <View style={[styles.statCard, { backgroundColor: '#4caf50' }]}>
-              <Text style={styles.statValue}>{stats.concluidas.length}</Text>
-              <Text style={styles.statLabel}>Concluída</Text>
-            </View>
+            <StatCard value={stats.pendentes.length} label="Pendentes" color="#f44336" />
+            <StatCard value={stats.emProgresso.length} label="Em Andamento" color="#ff9800" />
+            <StatCard value={stats.concluidas.length} label="Concluída" color="#4caf50" />
           </View>
         </View>
 
@@ -269,24 +259,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 12,
     marginBottom: 12
-  },
-  statCard: {
-    flex: 1,
-    borderRadius: 8,
-    padding: 12,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  statValue: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#fff',
-    marginBottom: 4
-  },
-  statLabel: {
-    fontSize: 12,
-    color: '#fff',
-    fontWeight: '500'
   },
   intervencaoCard: {
     backgroundColor: '#fff',

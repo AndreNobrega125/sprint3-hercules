@@ -1,4 +1,3 @@
-import React from 'react';
 import { TouchableOpacity, Text } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -71,7 +70,7 @@ function AppTabsGestor() {
         options={{
           title: 'Dashboard',
           tabBarLabel: 'Dashboard',
-          tabBarIcon: ({ color }) => <Text style={{ fontSize: 20 }}>📊</Text>
+          tabBarIcon: () => <Text style={{ fontSize: 20 }}>📊</Text>
         }}
       />
       <Tab.Screen
@@ -80,7 +79,7 @@ function AppTabsGestor() {
         options={{
           title: 'Trechos',
           tabBarLabel: 'Trechos',
-          tabBarIcon: ({ color }) => <Text style={{ fontSize: 20 }}>🗺️</Text>
+          tabBarIcon: () => <Text style={{ fontSize: 20 }}>🗺️</Text>
         }}
       />
       <Tab.Screen
@@ -89,7 +88,7 @@ function AppTabsGestor() {
         options={{
           title: 'Notificações',
           tabBarLabel: 'Notificações',
-          tabBarIcon: ({ color }) => <Text style={{ fontSize: 20 }}>🔔</Text>,
+          tabBarIcon: () => <Text style={{ fontSize: 20 }}>🔔</Text>,
           tabBarBadge: unreadCount > 0 ? unreadCount : undefined
         }}
       />
@@ -123,7 +122,7 @@ function AppTabsFiscal() {
         options={{
           title: 'Dashboard',
           tabBarLabel: 'Dashboard',
-          tabBarIcon: ({ color }) => <Text style={{ fontSize: 20 }}>📊</Text>
+          tabBarIcon: () => <Text style={{ fontSize: 20 }}>📊</Text>
         }}
       />
       <Tab.Screen
@@ -132,7 +131,7 @@ function AppTabsFiscal() {
         options={{
           title: 'Trechos',
           tabBarLabel: 'Trechos',
-          tabBarIcon: ({ color }) => <Text style={{ fontSize: 20 }}>🗺️</Text>
+          tabBarIcon: () => <Text style={{ fontSize: 20 }}>🗺️</Text>
         }}
       />
       <Tab.Screen
@@ -141,7 +140,7 @@ function AppTabsFiscal() {
         options={{
           title: 'Notificações',
           tabBarLabel: 'Notificações',
-          tabBarIcon: ({ color }) => <Text style={{ fontSize: 20 }}>🔔</Text>,
+          tabBarIcon: () => <Text style={{ fontSize: 20 }}>🔔</Text>,
           tabBarBadge: unreadCount > 0 ? unreadCount : undefined
         }}
       />
@@ -175,7 +174,7 @@ function AppTabsTrabalhador() {
         options={{
           title: 'Minhas Tarefas',
           tabBarLabel: 'Tarefas',
-          tabBarIcon: ({ color }) => <Text style={{ fontSize: 20 }}>✓</Text>
+          tabBarIcon: () => <Text style={{ fontSize: 20 }}>✓</Text>
         }}
       />
       <Tab.Screen
@@ -184,7 +183,7 @@ function AppTabsTrabalhador() {
         options={{
           title: 'Trechos',
           tabBarLabel: 'Trechos',
-          tabBarIcon: ({ color }) => <Text style={{ fontSize: 20 }}>🗺️</Text>
+          tabBarIcon: () => <Text style={{ fontSize: 20 }}>🗺️</Text>
         }}
       />
       <Tab.Screen
@@ -193,7 +192,7 @@ function AppTabsTrabalhador() {
         options={{
           title: 'Notificações',
           tabBarLabel: 'Notificações',
-          tabBarIcon: ({ color }) => <Text style={{ fontSize: 20 }}>🔔</Text>,
+          tabBarIcon: () => <Text style={{ fontSize: 20 }}>🔔</Text>,
           tabBarBadge: unreadCount > 0 ? unreadCount : undefined
         }}
       />

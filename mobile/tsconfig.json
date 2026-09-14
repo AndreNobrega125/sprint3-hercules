@@ -19,6 +19,7 @@
     "jsx": "react-jsx",
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "ignoreDeprecations": "6.0",
     "baseUrl": ".",
     "paths": {
       "@/*": [
@@ -48,11 +49,6 @@
     "index.ts",
     "App.tsx",
     "src"
-  ],
-  "references": [
-    {
-      "path": "./tsconfig.app.json"
-    }
   ],
   "extends": "expo/tsconfig.base"
 }

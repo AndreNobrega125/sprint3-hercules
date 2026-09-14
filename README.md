@@ -1,6 +1,6 @@
 # VeroAI — Monitoramento Inteligente de Vegetação em Rodovias
 
-> **Challenge CCR Motiva · Sprint 2 — App Mobile Nativo (React Native/Expo)**
+> **Challenge CCR Motiva · Sprint 3 — Protótipo Funcional Completo (React Native/Expo)**
 
 ---
 
@@ -28,6 +28,17 @@ Na **Sprint 2**, o projeto evoluiu para um **app mobile nativo em React Native/E
 - Sistema de notificações cruzadas entre perfis, todas clicáveis e levando direto à informação atualizada
 - Login com validação estrita por matrícula (G101/F101/T101)
 - Dados mock realistas no contexto da rodovia SP-280
+
+Na **Sprint 3**, o foco foi fechar lacunas de navegação e ampliar a cobertura de cenários (sucesso, erro, vazio e alternativos), sem introduzir novas telas:
+
+- Corrigido feedback de erro no login para matrícula inválida (antes falhava silenciosamente)
+- Corrigidos botões sem ação no Dashboard do Gestor ("Pendentes"/"Concluídas")
+- Adicionado cenário de trecho nunca vistoriado e de intervenção em andamento aos mocks, exercitando estados que existiam no código mas nunca apareciam na prática
+- Corrigido `tsconfig.json` (referência a arquivo inexistente impedia o typecheck de rodar) e removidos imports/variáveis não utilizados
+- Criada camada de componentes reutilizáveis (`src/components/`: `StatCard`, `StatusBadge`, `EmptyState`) e utilitário compartilhado de status (`src/utils/status.ts`), eliminando lógica de cor/label duplicada em pelo menos 4 telas
+- Corrigidos 2 bugs encontrados ao rodar o app de verdade: erro de concordância ("notificaçãos") e filtro de altura faltando na seção "Informações do Trecho" do Dashboard do Trabalhador
+- Testado de ponta a ponta rodando o app num navegador (`expo start --web`), cobrindo os 3 perfis, fluxo completo de Nova Vistoria e notificações
+- Documento de testes manuais cobrindo os fluxos principais: [TESTES_MANUAIS.md](TESTES_MANUAIS.md)
 
 ---
 
@@ -72,8 +83,9 @@ Na **Sprint 2**, o projeto evoluiu para um **app mobile nativo em React Native/E
 - **Sem acesso a registro de vistoria** (acesso negado se tentar navegar até lá)
 
 ### Lista de Trechos
-- Os 5 trechos da SP-280 com status, altura atual e data da última vistoria
+- Os 6 trechos da SP-280 com status, altura atual e data da última vistoria (incluindo um trecho nunca vistoriado)
 - Destaque visual para trechos pendentes de vistoria (via notificação)
+- Estado vazio ("Nenhum trecho encontrado") quando a busca não retorna resultados
 
 ### Detalhes do Trecho
 - Informações completas (km, regional, status, altura atual)
@@ -113,10 +125,11 @@ A senha não é validada na Sprint 2 — qualquer valor é aceito. Apenas as 3 m
 
 ## 🎯 Dados Mock
 
-- **Trechos:** 5 trechos da SP-280 (km 50 a km 70), com status OK/Atenção/Crítico
+- **Trechos:** 6 trechos da SP-280 (km 50 a km 75), com status OK/Atenção/Crítico — incluindo um trecho nunca vistoriado (km 75, Cotia) para cobrir o fluxo alternativo "aguardando vistoria do fiscal"
 - **Vistorias:** registros com altura, data/hora e fiscal responsável
-- **Intervenções (roçadas):** pendentes e concluídas, vinculadas aos trechos
+- **Intervenções (roçadas):** pendentes, em andamento e concluídas, vinculadas aos trechos
 - **Notificações:** geradas dinamicamente conforme as ações de cada perfil
+- **Cenários cobertos:** sucesso (login válido, vistoria registrada, roçada concluída), erro (matrícula inválida, altura não numérica), vazio (lista de trechos sem resultado de busca, notificações zeradas) e alternativo (acesso negado do Trabalhador, trecho aguardando primeira vistoria)
 
 ---
 
@@ -129,14 +142,37 @@ A senha não é validada na Sprint 2 — qualquer valor é aceito. Apenas as 3 m
 
 ---
 
-## 📝 Requisitos do Professor (Sprint 2)
+## 📝 Status por Funcionalidade (Sprint 3)
 
-- ✅ App mobile nativo funcional (React Native/Expo)
-- ✅ Múltiplas telas com navegação (Login, 3 Dashboards, Trechos, Detalhes, Nova Vistoria, Notificações)
-- ✅ Mock de dados realista no contexto Motiva/SP-280
-- ✅ Fluxo completo: vistoria → roçada → notificação, com regras por perfil (Gestor/Fiscal/Trabalhador)
-- ✅ Organização de código (screens, navigation, context, mocks, types)
-- ⏳ Vídeo demonstrativo (roteiro em `mobile/VIDEO_SCRIPT.md`)
+| Funcionalidade | Status | Observação |
+|---|---|---|
+| Login com detecção de perfil | ✅ Completo | Erro de matrícula inválida agora exibe feedback (corrigido nesta sprint) |
+| Dashboard do Gestor | ✅ Completo | Botões "Pendentes"/"Concluídas" agora navegam (corrigido nesta sprint) |
+| Dashboard do Fiscal | ✅ Completo | — |
+| Dashboard do Trabalhador | ✅ Completo | Estados "aguardando fiscal" e "em andamento" agora aparecem de fato (mock ampliado) |
+| Lista de Trechos (busca/ordenação) | ✅ Completo | Estado vazio de busca funcional |
+| Detalhes do Trecho | ✅ Completo | Fallback "Nunca vistoriado" adicionado |
+| Nova Vistoria (3 passos) | ✅ Completo | Bloqueio de acesso para Trabalhador funcional |
+| Notificações (ler/marcar todas/excluir) | ✅ Completo | — |
+| Componentes reutilizáveis / consistência visual | ✅ Completo | `StatCard`, `StatusBadge`, `EmptyState` extraídos para `src/components/`, lógica de status centralizada em `src/utils/status.ts` |
+| Integração com API real | ⏳ Não iniciado | Previsto para Sprint 4 |
+| Autenticação real (JWT/senha) | ⏳ Não iniciado | Previsto para Sprint 4 |
+| Câmera e GPS reais | ⏳ Não iniciado | Hoje mockados; `expo-camera`/`expo-location` já instalados |
+| Push notifications | ⏳ Não iniciado | Previsto para Sprint 4 |
+| Modo offline | ⏳ Não iniciado | Previsto para Sprint 4 |
+
+**Pendências identificadas nesta sprint:**
+- Testar em dispositivo físico/emulador Android real (a validação desta sprint foi feita rodando o app num navegador via `expo start --web` — cobre navegação e lógica, mas não câmera/GPS nativos nem gestos específicos do Android)
+- Decidir se vale o upgrade pro Expo SDK 57 (resolve um alerta de regressão de memória do Hermes V1 apontado pelo `expo-doctor`; é mudança major, não feita ainda)
+- Nenhum teste automatizado (unitário/e2e) no projeto ainda
+
+**Plano para a Sprint 4:**
+1. Rodar a suíte de testes manuais em dispositivo real e registrar evidência (prints)
+2. Iniciar integração com backend/API real, substituindo o mock gradualmente
+3. Implementar autenticação real e permissões de câmera/localização
+4. Avaliar cobertura de testes automatizados básicos para as stores (Zustand)
+
+> ⏳ Vídeo demonstrativo (roteiro em `mobile/VIDEO_SCRIPT.md`)
 
 ---
 
@@ -169,12 +205,15 @@ A senha não é validada na Sprint 2 — qualquer valor é aceito. Apenas as 3 m
 ```
 sprint2-hercules/
 ├── README.md                    ← este arquivo
-└── mobile/                       ← App Expo (Sprint 2)
+├── TESTES_MANUAIS.md            ← documento de testes manuais (Sprint 3)
+└── mobile/                       ← App Expo
     ├── src/
     │   ├── screens/              ← Login, 3 Dashboards, ListaTrechos, TrechoDetalhe, NovaVistoria, Notificacoes
+    │   ├── components/           ← Componentes reutilizáveis (StatCard, StatusBadge, EmptyState)
     │   ├── navigation/           ← Stack + Bottom Tabs (dinâmico por perfil)
     │   ├── context/              ← authStore, dataStore, notificationStore (Zustand)
     │   ├── mocks/                ← Dados mock (usuários, trechos, vistorias, intervenções, notificações)
+    │   ├── utils/                ← Lógica compartilhada (classificação/cor/label de status)
     │   └── types/                ← Tipos TypeScript
     ├── App.tsx
     ├── app.json
