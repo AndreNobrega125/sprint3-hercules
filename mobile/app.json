@@ -2,6 +2,7 @@
   "expo": {
     "name": "VeroAI",
     "slug": "veroai-mobile",
+    "owner": "andrenobrega_125",
     "version": "2.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
@@ -13,6 +14,11 @@
     },
     "web": {
       "bundler": "metro"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ca2011b4-ef4b-4d08-a71b-453e5e15ab45"
+      }
     }
   }
 }
