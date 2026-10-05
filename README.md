@@ -1,6 +1,19 @@
 # VeroAI — Monitoramento Inteligente de Vegetação em Rodovias
 
-> **Challenge CCR Motiva · Sprint 3 — Protótipo Funcional Completo (React Native/Expo)**
+> **Challenge CCR Motiva · Versão final (Sprint 4) — App Android em React Native/Expo**
+
+O **VeroAI** digitaliza o ciclo de controle de vegetação na faixa de domínio de rodovias concessionadas — **vistoria → classificação de risco → roçada → confirmação** — dando a cada perfil (Fiscal, Trabalhador e Gestor) exatamente a informação de que precisa. O protótipo foi construído sobre a rodovia **SP-280 (Regional Oeste)** e usa dados mockados enquanto a integração com APIs reais não está disponível.
+
+---
+
+## 🔗 Links principais
+
+| Entrega | Link |
+|---|---|
+| 📦 **APK para download** | [`veroai-v2.0.0.apk` (GitHub Releases)](https://github.com/AndreNobrega125/sprint3-hercules/releases/download/v2.0.0/veroai-v2.0.0.apk) · [página do release](https://github.com/AndreNobrega125/sprint3-hercules/releases/tag/v2.0.0) |
+| 🎬 **Vídeo de pitch e demonstração** | _adicionar link do YouTube (não listado) após a gravação_ |
+| 💼 **Plano de negócio** | [PLANO_DE_NEGOCIO.md](PLANO_DE_NEGOCIO.md) |
+| 🧪 **Documento de testes manuais** | [TESTES_MANUAIS.md](TESTES_MANUAIS.md) |
 
 ---
 
@@ -8,41 +21,83 @@
 
 | Nome | RM |
 |------|----|
-| *(André Nobrega)* | *(RM561754)* |
-| *(André Gouveia)* | *(RM564219)* |
-| *(Caio Carminato)* | *(RM563630)* |
-| *(Guilherme Tamai)* | *(RM563276)* |
-| *(Mirella Mascarenhas)* | *(RM562092)* |
-| *(Vitor Komura)* | *(RM563694)* |
+| André Nobrega | RM561754 |
+| André Gouveia | RM564219 |
+| Caio Carminato | RM563630 |
+| Guilherme Tamai | RM563276 |
+| Mirella Mascarenhas | RM562092 |
+| Vitor Komura | RM563694 |
 
 ---
 
-## 🧭 Contexto e Evolução
+## 📲 Como instalar o APK (Android)
 
-Na **Sprint 1**, foi desenvolvido um protótipo web em Next.js para validar o conceito do VeroAI: monitoramento de altura de vegetação em trechos de rodovia (SP-280) com classificação automática de risco.
+1. No celular Android, abra o link do APK acima (ou baixe o arquivo `veroai-v2.0.0.apk` pelo computador e transfira para o aparelho).
+2. Ao abrir o arquivo, o Android pedirá para **permitir a instalação de apps de fontes desconhecidas** para o navegador/gerenciador de arquivos usado — autorize (o APK não vem da Play Store por ser uma entrega acadêmica).
+3. Toque em **Instalar** e depois em **Abrir**.
+4. Na tela de login, use uma das contas de teste abaixo.
 
-Na **Sprint 2**, o projeto evoluiu para um **app mobile nativo em React Native/Expo**, com:
+> O APK é gerado em modo *internal distribution* (perfil `preview` do EAS Build), pensado para instalação direta — não é um pacote para publicação na Play Store.
 
-- 3 dashboards distintos por perfil (Gestor, Fiscal e Trabalhador), cada um com regras de acesso e visualizações próprias
-- Fluxo de negócio completo e integrado: vistoria → roçada → notificação
-- Sistema de notificações cruzadas entre perfis, todas clicáveis e levando direto à informação atualizada
-- Login com validação estrita por matrícula (G101/F101/T101)
-- Dados mock realistas no contexto da rodovia SP-280
+### 🔐 Contas de teste
 
-Na **Sprint 3**, o foco foi fechar lacunas de navegação e ampliar a cobertura de cenários (sucesso, erro, vazio e alternativos), sem introduzir novas telas:
+| Matrícula | Perfil | Acesso |
+|-----------|--------|--------|
+| **G101** | Gestor | Visão geral de tudo: vistorias e roçadas de todos os trechos |
+| **F101** | Fiscal | Registra vistorias e acompanha trechos a vistoriar |
+| **T101** | Trabalhador | Marca roçadas como concluídas |
+
+A senha não é validada nesta versão (protótipo com dados mockados): apenas as 3 matrículas acima são reconhecidas; qualquer outro valor é rejeitado no login com um alerta de erro.
+
+---
+
+## 🧭 Resumo das entregas por Sprint
+
+| Sprint | Entrega | Resultado |
+|---|---|---|
+| **1** | Protótipo web em Next.js para validar o conceito: monitoramento de altura de vegetação na SP-280 com classificação automática de risco | Conceito validado; web descontinuada em favor do app mobile |
+| **2** | App mobile nativo em React Native/Expo: 3 dashboards por perfil, fluxo vistoria → roçada → notificação, notificações cruzadas entre perfis, login por matrícula, dados mock da SP-280 | App funcional com navegação por perfil |
+| **3** | Protótipo funcional completo: correção de navegação quebrada, mock cobrindo sucesso/erro/vazio/alternativo, componentização, testes manuais documentados e confirmados em emulador Android | Todos os fluxos navegáveis, sem botões mortos, typecheck limpo |
+| **4** | Versão final: build do **APK via Expo EAS Build**, **plano de negócio** e README consolidado | APK gerado e hospedado no GitHub Releases; plano de negócio documentado |
+
+<details>
+<summary><strong>Detalhe da evolução na Sprint 3</strong></summary>
 
 - Corrigido feedback de erro no login para matrícula inválida (antes falhava silenciosamente)
 - Corrigidos botões sem ação no Dashboard do Gestor ("Pendentes"/"Concluídas")
-- Adicionado cenário de trecho nunca vistoriado e de intervenção em andamento aos mocks, exercitando estados que existiam no código mas nunca apareciam na prática
-- Corrigido `tsconfig.json` (referência a arquivo inexistente impedia o typecheck de rodar) e removidos imports/variáveis não utilizados
-- Criada camada de componentes reutilizáveis (`src/components/`: `StatCard`, `StatusBadge`, `EmptyState`) e utilitário compartilhado de status (`src/utils/status.ts`), eliminando lógica de cor/label duplicada em pelo menos 4 telas
-- Corrigidos 2 bugs encontrados ao rodar o app de verdade: erro de concordância ("notificaçãos") e filtro de altura faltando na seção "Informações do Trecho" do Dashboard do Trabalhador
-- Testado de ponta a ponta em navegador (`expo start --web`) e depois confirmado em emulador Android real, cobrindo os 3 perfis, fluxo completo de Nova Vistoria, notificações e câmera/GPS mockados
-- Documento de testes manuais cobrindo os fluxos principais: [TESTES_MANUAIS.md](TESTES_MANUAIS.md)
+- Adicionados aos mocks um trecho nunca vistoriado e uma intervenção em andamento, exercitando estados que existiam no código mas nunca apareciam
+- Corrigido `tsconfig.json` (referência a arquivo inexistente impedia o typecheck) e removidos imports/variáveis não utilizados
+- Criada camada de componentes reutilizáveis (`src/components/`: `StatCard`, `StatusBadge`, `EmptyState`) e utilitário compartilhado de status (`src/utils/status.ts`)
+- Corrigidos 2 bugs encontrados na execução real: erro de concordância ("notificaçãos") e filtro de altura faltando em "Informações do Trecho"
+- Testado em navegador (`expo start --web`) e confirmado em emulador Android, cobrindo os 3 perfis, Nova Vistoria, notificações e câmera/GPS mockados
+
+</details>
+
+<details>
+<summary><strong>Detalhe da entrega na Sprint 4</strong></summary>
+
+- Projeto vinculado ao EAS (`@andrenobrega_125/veroai-mobile`) com `eas.json` configurado para gerar **APK** (e não AAB) no perfil `preview`
+- Corrigida a causa de falha do primeiro build: o EAS roda `npm ci`, que exige `package-lock.json` sincronizado — adicionado `.npmrc` com `legacy-peer-deps=true` e regenerado o lockfile, validado localmente com `npm ci` antes do novo build
+- Plano de negócio contextualizado na Motiva: [PLANO_DE_NEGOCIO.md](PLANO_DE_NEGOCIO.md)
+- README consolidado como documento-âncora (este arquivo)
+
+</details>
 
 ---
 
-## 📊 Fluxo de Negócio
+## 💼 Plano de negócio (resumo)
+
+- **Problema:** concessionárias têm obrigação regulatória de manter a faixa de domínio livre de vegetação alta; hoje o controle depende de vistoria manual, papel/planilha e comunicação informal entre Fiscal e equipe de roçada, sem rastreabilidade.
+- **Proposta de valor:** digitalizar o ciclo vistoria → roçada, com classificação de risco automática e padronizada, e cada perfil vendo apenas o que precisa agir.
+- **Público-alvo:** equipes de campo (Fiscal/Trabalhador) e gestão regional da Motiva — ferramenta operacional B2B **interna**.
+- **Valor/receita:** retorno por redução de custo operacional (menos deslocamento em vão), redução de risco regulatório (histórico auditável) e visibilidade gerencial. Licenciamento a outras concessões do grupo é uma possibilidade futura, ainda não fechada.
+- **Custo estimado (piloto, 1 regional):** ordem de R$ 2.150 – 4.500/mês, majoritariamente suporte/manutenção — estimativa ilustrativa, não dado oficial da Motiva.
+
+➡️ Documento completo, com personas, riscos e diferenciais: [PLANO_DE_NEGOCIO.md](PLANO_DE_NEGOCIO.md)
+
+---
+
+## 📊 Fluxo de negócio
 
 1. **Fiscal** registra uma vistoria em um trecho
    - Classificação automática pela altura: **OK** (≤10cm), **Atenção** (10–30cm), **Crítico** (≥30cm)
@@ -58,48 +113,83 @@ Na **Sprint 3**, o foco foi fechar lacunas de navegação e ampliar a cobertura 
 
 ---
 
-## 📱 Telas e Funcionalidades
+## 📱 Telas e funcionalidades
 
 ### Login
-- Campo de matrícula com validação estrita (G101/F101/T101)
+- Campo de matrícula com validação estrita (G101/F101/T101) e alerta de erro para matrícula inválida
 - Detecção automática do perfil (Gestor/Fiscal/Trabalhador)
 
 ### Dashboard do Gestor (G101)
-- Indicadores gerais: total de trechos, OK, Atenção, Crítico, conformidade
-- Histórico das últimas vistorias registradas pelo Fiscal
-- Roçadas pendentes e concluídas pelo Trabalhador
-- Notificações de vistorias e roçadas, clicáveis → leva direto ao trecho atualizado
+- Indicadores gerais: OK, Atenção, Crítico e taxa de conformidade
+- Últimas vistorias registradas pelo Fiscal
+- Roçadas pendentes e concluídas (cards navegáveis)
+- Notificações clicáveis → levam direto ao trecho atualizado
 
 ### Dashboard do Fiscal (F101)
 - Indicadores: trechos a vistoriar hoje, vistoriados hoje, total
-- Lista de "Trechos que Preciso Vistoriar" e "Vistoriado Hoje"
-- Botão "+ Nova Vistoria" (3 passos: selecionar trecho, altura, observações/foto)
-- Notificações quando o Trabalhador conclui uma roçada
+- Listas "Trechos que Preciso Vistoriar" e "Vistoriado Hoje"
+- Botão "+ Nova Vistoria" (3 passos: selecionar trecho, foto, altura/observações)
 
 ### Dashboard do Trabalhador (T101)
 - Indicadores: roçadas pendentes, em andamento, concluídas hoje
 - 🌿 "Pronto para Roçada" — trechos já vistoriados, com botão "Marcar Roçada como Concluída"
-- ⏳ "Aguardando Vistoria do Fiscal" — trechos sem vistoria ainda (não pode concluir)
-- **Sem acesso a registro de vistoria** (acesso negado se tentar navegar até lá)
+- ⏳ "Aguardando Vistoria do Fiscal" — trechos sem vistoria (não pode concluir)
+- Sem acesso a registro de vistoria (tela de "Acesso Negado")
 
-### Lista de Trechos
-- Os 6 trechos da SP-280 com status, altura atual e data da última vistoria (incluindo um trecho nunca vistoriado)
-- Destaque visual para trechos pendentes de vistoria (via notificação)
-- Estado vazio ("Nenhum trecho encontrado") quando a busca não retorna resultados
-
-### Detalhes do Trecho
-- Informações completas (km, regional, status, altura atual)
-- Histórico de vistorias e intervenções (roçadas)
-- Botão "Registrar Nova Vistoria" (oculto para o Trabalhador)
+### Lista e detalhes de trechos
+- 6 trechos da SP-280 com status, altura e última vistoria (incluindo um trecho nunca vistoriado), busca, ordenação e estado vazio
+- Detalhes com km, regional, histórico de vistorias e intervenções; botão "Registrar Nova Vistoria" oculto para o Trabalhador
 
 ### Notificações
-- Lista filtrada por usuário logado
-- Marcar como lida / marcar todas / excluir
-- Cada notificação é clicável e leva para o trecho/tela correspondente com dados atualizados
+- Lista filtrada por usuário, marcar como lida / marcar todas / excluir, e navegação direta ao trecho relacionado
 
 ---
 
-## 🚀 Como Rodar
+## 🛠️ Stack utilizada
+
+- **React Native 0.85** + **Expo SDK 56**
+- **React Navigation 6** (Native Stack + Bottom Tabs)
+- **Zustand** (estado global)
+- **TypeScript**
+- **Expo EAS Build** (geração do APK)
+
+---
+
+## 🎯 Dados mock
+
+- **Trechos:** 6 trechos da SP-280 (km 50 a km 75), com status OK/Atenção/Crítico — incluindo um nunca vistoriado (km 75, Cotia)
+- **Vistorias:** altura, data/hora e fiscal responsável
+- **Intervenções (roçadas):** pendentes, em andamento e concluídas
+- **Notificações:** geradas dinamicamente conforme as ações de cada perfil
+- **Cenários cobertos:** sucesso (login válido, vistoria registrada, roçada concluída), erro (matrícula inválida, altura não numérica), vazio (busca sem resultado, notificações zeradas) e alternativo (acesso negado do Trabalhador, trecho aguardando primeira vistoria)
+
+---
+
+## 📝 Status e limitações conhecidas
+
+| Funcionalidade | Status | Observação |
+|---|---|---|
+| Login com detecção de perfil | ✅ Completo | Erro de matrícula inválida com alerta |
+| Dashboards (Gestor, Fiscal, Trabalhador) | ✅ Completo | Sem botões sem ação |
+| Lista e detalhes de trechos | ✅ Completo | Busca, ordenação e estados vazios |
+| Nova Vistoria (3 passos) | ✅ Completo | Classificação automática em tempo real |
+| Notificações | ✅ Completo | Ler, marcar todas, excluir, navegar |
+| Componentes reutilizáveis | ✅ Completo | `src/components/` e `src/utils/status.ts` |
+| Build do APK (EAS) | ✅ Gerado | Perfil `preview`, hospedado no GitHub Releases |
+| Integração com API real | ❌ Fora do escopo | Dados 100% mockados |
+| Autenticação real (JWT/senha) | ❌ Fora do escopo | Login apenas por matrícula de teste |
+| Câmera e GPS reais | ❌ Fora do escopo | Mockados; `expo-camera`/`expo-location` já instalados |
+| Push notifications / modo offline | ❌ Fora do escopo | Evolução futura |
+
+**Limitações conhecidas (honestas):**
+- É um **protótipo funcional com dados mockados**: os dados não persistem entre execuções do app.
+- O `expo-doctor` aponta uma regressão de memória do Hermes V1 no Expo SDK 56, que só é corrigida com upgrade major para o SDK 57 — **não realizado** por ser mudança de alto risco; não afetou os testes realizados.
+- Não há testes automatizados (unitários/e2e); a validação foi manual — ver [TESTES_MANUAIS.md](TESTES_MANUAIS.md).
+- A validação em dispositivo foi feita em **emulador Android**; dispositivo físico não foi validado.
+
+---
+
+## 🚀 Como rodar o código-fonte
 
 ```bash
 cd mobile
@@ -107,76 +197,23 @@ npm install --legacy-peer-deps
 npx expo start
 ```
 
-No terminal, pressione `a` para abrir no **emulador Android** (Android Studio aberto) ou escaneie o QR code com o app **Expo Go**.
+No terminal do Expo, pressione `a` para abrir no **emulador Android** (Android Studio aberto) ou escaneie o QR code com o app **Expo Go**.
 
-> Dica: use `npm run dev-fast` (dentro de `mobile/`) para iniciar o Expo sem checagem de TypeScript, deixando o startup mais rápido.
+> Dica: `npm run dev-fast` (dentro de `mobile/`) inicia o Expo sem checagem de TypeScript, deixando o startup mais rápido.
 
-### 🔐 Contas de Teste
+### Como gerar o APK novamente
 
-| Matrícula | Perfil | Acesso |
-|-----------|--------|--------|
-| **G101** | Gestor | Visão geral de tudo: vistorias e roçadas de todos os trechos |
-| **F101** | Fiscal | Registra vistorias e acompanha trechos a vistoriar |
-| **T101** | Trabalhador | Marca roçadas como concluídas |
+```bash
+cd mobile
+npx eas login
+npx eas build --platform android --profile preview
+```
 
-A senha não é validada na Sprint 2 — qualquer valor é aceito. Apenas as 3 matrículas acima são reconhecidas pelo sistema; qualquer outro valor é rejeitado no login.
-
----
-
-## 🎯 Dados Mock
-
-- **Trechos:** 6 trechos da SP-280 (km 50 a km 75), com status OK/Atenção/Crítico — incluindo um trecho nunca vistoriado (km 75, Cotia) para cobrir o fluxo alternativo "aguardando vistoria do fiscal"
-- **Vistorias:** registros com altura, data/hora e fiscal responsável
-- **Intervenções (roçadas):** pendentes, em andamento e concluídas, vinculadas aos trechos
-- **Notificações:** geradas dinamicamente conforme as ações de cada perfil
-- **Cenários cobertos:** sucesso (login válido, vistoria registrada, roçada concluída), erro (matrícula inválida, altura não numérica), vazio (lista de trechos sem resultado de busca, notificações zeradas) e alternativo (acesso negado do Trabalhador, trecho aguardando primeira vistoria)
+O `eas.json` já define o perfil `preview` com `buildType: apk`, e o `.npmrc` fixa `legacy-peer-deps=true` para que o `npm ci` executado pelo EAS resolva as dependências da mesma forma que o ambiente local. Os binários **não** são versionados no repositório — são publicados em GitHub Releases.
 
 ---
 
-## 🛠️ Tecnologias
-
-- **React Native 0.85** + **Expo SDK 56**
-- **React Navigation 6** (Native Stack + Bottom Tabs)
-- **Zustand** (gerenciamento de estado global)
-- **TypeScript**
-
----
-
-## 📝 Status por Funcionalidade (Sprint 3)
-
-| Funcionalidade | Status | Observação |
-|---|---|---|
-| Login com detecção de perfil | ✅ Completo | Erro de matrícula inválida agora exibe feedback (corrigido nesta sprint) |
-| Dashboard do Gestor | ✅ Completo | Botões "Pendentes"/"Concluídas" agora navegam (corrigido nesta sprint) |
-| Dashboard do Fiscal | ✅ Completo | — |
-| Dashboard do Trabalhador | ✅ Completo | Estados "aguardando fiscal" e "em andamento" agora aparecem de fato (mock ampliado) |
-| Lista de Trechos (busca/ordenação) | ✅ Completo | Estado vazio de busca funcional |
-| Detalhes do Trecho | ✅ Completo | Fallback "Nunca vistoriado" adicionado |
-| Nova Vistoria (3 passos) | ✅ Completo | Bloqueio de acesso para Trabalhador funcional |
-| Notificações (ler/marcar todas/excluir) | ✅ Completo | — |
-| Componentes reutilizáveis / consistência visual | ✅ Completo | `StatCard`, `StatusBadge`, `EmptyState` extraídos para `src/components/`, lógica de status centralizada em `src/utils/status.ts` |
-| Integração com API real | ⏳ Não iniciado | Previsto para Sprint 4 |
-| Autenticação real (JWT/senha) | ⏳ Não iniciado | Previsto para Sprint 4 |
-| Câmera e GPS reais | ⏳ Não iniciado | Hoje mockados; `expo-camera`/`expo-location` já instalados |
-| Push notifications | ⏳ Não iniciado | Previsto para Sprint 4 |
-| Modo offline | ⏳ Não iniciado | Previsto para Sprint 4 |
-
-**Pendências identificadas nesta sprint:**
-- Decidir se vale o upgrade pro Expo SDK 57 (resolve um alerta de regressão de memória do Hermes V1 apontado pelo `expo-doctor`; é mudança major, não feita ainda)
-- Nenhum teste automatizado (unitário/e2e) no projeto ainda
-- Testar em dispositivo físico (o teste desta sprint cobriu emulador Android; dispositivo físico real ainda não foi validado)
-
-**Plano para a Sprint 4:**
-1. Repetir a suíte de testes manuais em dispositivo físico real (hoje validada em emulador Android)
-2. Iniciar integração com backend/API real, substituindo o mock gradualmente
-3. Implementar autenticação real e permissões de câmera/localização
-4. Avaliar cobertura de testes automatizados básicos para as stores (Zustand)
-
-> ⏳ Vídeo demonstrativo (roteiro em `mobile/VIDEO_SCRIPT.md`)
-
----
-
-## 🖼️ Capturas de Tela
+## 🖼️ Capturas de tela
 
 | Tela | Print | Descrição |
 |------|-------|-----------|
@@ -184,7 +221,7 @@ A senha não é validada na Sprint 2 — qualquer valor é aceito. Apenas as 3 m
 | **Dashboard do Gestor** | ![Dashboard Gestor](screenshots/Tela%20gestor%20veroai.png) | Visão geral de todos os trechos, vistorias recentes e roçadas pendentes/concluídas. |
 | **Dashboard do Fiscal** | ![Dashboard Fiscal](screenshots/Tela%20fiscal%20veroai.png) | Trechos a vistoriar hoje, vistoriados hoje e acesso rápido para nova vistoria. |
 | **Dashboard do Trabalhador** | ![Dashboard Trabalhador](screenshots/Tela%20trabalhador%20veroai.png) | Roçadas prontas para execução e trechos aguardando vistoria do fiscal. |
-| **Lista de Trechos** | ![Lista de Trechos](screenshots/Tela%20trechos%20veroai.png) | Os 5 trechos da SP-280 com status (OK/Atenção/Crítico) e última vistoria. |
+| **Lista de Trechos** | ![Lista de Trechos](screenshots/Tela%20trechos%20veroai.png) | Trechos da SP-280 com status (OK/Atenção/Crítico) e última vistoria (print da Sprint 2; a versão atual tem 6 trechos). |
 | **Trechos que Precisam de Vistoria** | ![Trechos que Precisam de Vistoria](screenshots/Trechos%20que%20precisam%20de%20vistoria.png) | Destaque visual dos trechos pendentes, acessado pela notificação. |
 | **Detalhes do Trecho** | ![Detalhes do Trecho](screenshots/Tela%20Informações%20do%20trecho.png) | Informações completas do trecho, histórico de vistorias e intervenções. |
 | **Nova Vistoria - Passo 1** | ![Vistoria Passo 1](screenshots/Tela%20Vistoria%20pt1.png) | Seleção do trecho a ser vistoriado. |
@@ -194,18 +231,14 @@ A senha não é validada na Sprint 2 — qualquer valor é aceito. Apenas as 3 m
 
 ---
 
-## 🎬 Vídeo Demonstrativo
-
-> Link do vídeo (YouTube não-listado): _adicionar aqui_
-
----
-
-## 📁 Estrutura
+## 📁 Estrutura do repositório
 
 ```
 sprint2-hercules/
-├── README.md                    ← este arquivo
+├── README.md                    ← documento-âncora (este arquivo)
+├── PLANO_DE_NEGOCIO.md          ← plano de negócio (Sprint 4)
 ├── TESTES_MANUAIS.md            ← documento de testes manuais (Sprint 3)
+├── screenshots/                 ← capturas de tela
 └── mobile/                       ← App Expo
     ├── src/
     │   ├── screens/              ← Login, 3 Dashboards, ListaTrechos, TrechoDetalhe, NovaVistoria, Notificacoes
@@ -217,6 +250,8 @@ sprint2-hercules/
     │   └── types/                ← Tipos TypeScript
     ├── App.tsx
     ├── app.json
+    ├── eas.json                  ← perfis do EAS Build (preview = APK)
+    ├── .npmrc                    ← legacy-peer-deps=true
     └── package.json
 ```
 
