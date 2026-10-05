@@ -57,6 +57,27 @@
 
 ---
 
+## 7. Teste do APK final (Sprint 4)
+
+APK `veroai-v2.0.0.apk` (build EAS `705c8734`, perfil `preview`) **baixado do GitHub Release** — o mesmo link do README — e instalado via `adb install` em emulador Android (`Medium_Phone_API_36.1`, x86_64). O app rodou **standalone** (sem servidor de desenvolvimento). Os fluxos abaixo foram executados dentro do APK instalado; os textos foram lidos da tela via `uiautomator`.
+
+| Cenário | Resultado Esperado | Resultado Obtido | Status |
+|---|---|---|---|
+| Instalação do APK | `Success` no `adb install`, pacote `com.motiva.veroai` presente | `Performing Streamed Install → Success`; pacote listado | ✅ Passou |
+| Abertura do app | Tela de Login sem crash | MainActivity em foco, tela de Login renderizada | ✅ Passou |
+| Login inválido (`X999`) | Alerta de erro, sem navegar | Alerta nativo: "Matrícula não reconhecida — Use G101 (Gestor), F101 (Fiscal) ou T101 (Trabalhador)." | ✅ Passou |
+| Dashboard do Gestor (`G101`) | 1 OK / 3 Atenção / 2 Crítico, conformidade 17% | Valores idênticos aos esperados | ✅ Passou |
+| Card "Pendentes" do Gestor | Navega para Trechos | Navegou; 6 trechos listados | ✅ Passou |
+| Dashboard do Trabalhador (`T101`) | "Pronto para Roçada" (3) e "Aguardando Vistoria do Fiscal" (Cotia) | Seções e trecho SP280-KM75 presentes | ✅ Passou |
+| Concluir roçada | Alerta de sucesso; Pendentes 4→3 e Concluída 1→2 | Alerta "Roçada marcada como concluída!"; contadores 3 / 1 / 2 | ✅ Passou |
+| Notificação cruzada | Fiscal recebe "Roçada Concluída" do trecho concluído | Fiscal recebeu "Trabalhador concluiu roçada no trecho SP280-KM50" | ✅ Passou |
+| Detalhes de Cotia antes da vistoria | "Nunca vistoriado" e "Nenhuma vistoria registrada" | Ambos exibidos | ✅ Passou |
+| Nova Vistoria (altura 33cm) | Classificação "CRÍTICO" em tempo real; sucesso ao registrar | "Status CRÍTICO 33.0cm"; alerta "Vistoria registrada com sucesso!"; voltou aos Detalhes | ✅ Passou |
+| Trecho após a vistoria | 33cm, CRÍTICO, última vistoria hoje, histórico (1) | 33cm, CRITICO, Última Vistoria 2026-10-05, Histórico de Vistorias (1) | ✅ Passou |
+| Estabilidade | Nenhum crash/erro JS durante os fluxos | Nenhum `FATAL EXCEPTION`/erro JS no `logcat`; app no mesmo PID do início ao fim | ✅ Passou |
+
+**Não coberto nesta rodada do APK** (já confirmado em rodadas anteriores no app de desenvolvimento, mas não repetido no APK): notificação individual/excluir, busca sem resultado, ordenação, tela de "Acesso Negado" do Trabalhador. **Limitação:** teste em emulador; dispositivo físico não validado.
+
 ## Bugs encontrados na execução real — corrigidos e revalidados
 
 | Bug | Onde | Descrição | Status |

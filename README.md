@@ -79,6 +79,7 @@ A senha não é validada nesta versão (protótipo com dados mockados): apenas a
 - Projeto vinculado ao EAS (`@andrenobrega_125/veroai-mobile`) com `eas.json` configurado para gerar **APK** (e não AAB) no perfil `preview`
 - Corrigida a causa de falha do primeiro build: o EAS roda `npm ci`, que exige `package-lock.json` sincronizado — adicionado `.npmrc` com `legacy-peer-deps=true` e regenerado o lockfile, validado localmente com `npm ci` antes do novo build
 - Plano de negócio contextualizado na Motiva: [PLANO_DE_NEGOCIO.md](PLANO_DE_NEGOCIO.md)
+- APK hospedado no GitHub Releases (`v2.0.0`), baixado pelo mesmo link deste README, instalado em emulador Android e percorrido nos fluxos principais (login válido/inválido, 3 perfis, concluir roçada, notificação cruzada, Nova Vistoria) — sem crashes
 - README consolidado como documento-âncora (este arquivo)
 
 </details>
@@ -175,7 +176,7 @@ A senha não é validada nesta versão (protótipo com dados mockados): apenas a
 | Nova Vistoria (3 passos) | ✅ Completo | Classificação automática em tempo real |
 | Notificações | ✅ Completo | Ler, marcar todas, excluir, navegar |
 | Componentes reutilizáveis | ✅ Completo | `src/components/` e `src/utils/status.ts` |
-| Build do APK (EAS) | ✅ Gerado | Perfil `preview`, hospedado no GitHub Releases |
+| Build do APK (EAS) | ✅ Gerado e testado | Perfil `preview`, hospedado no GitHub Releases; instalado em emulador e fluxos principais executados sem crashes ([TESTES_MANUAIS.md](TESTES_MANUAIS.md), seção 7) |
 | Integração com API real | ❌ Fora do escopo | Dados 100% mockados |
 | Autenticação real (JWT/senha) | ❌ Fora do escopo | Login apenas por matrícula de teste |
 | Câmera e GPS reais | ❌ Fora do escopo | Mockados; `expo-camera`/`expo-location` já instalados |
