@@ -41,7 +41,21 @@ Nesta fase o VeroAI é pensado como **ferramenta interna da Motiva**. Não há r
 - **Risco regulatório:** histórico auditável de vistorias e roçadas.
 - **Gestão:** alocação de equipe baseada em dado, não em ronda genérica.
 
-**Possibilidade futura (decisão ainda em aberto com o professor):** licenciar para outras concessionárias. O benchmark abaixo sugere espaço, mas é preço de lista de produtos maduros e genéricos, não de um protótipo:
+### 4.1 Formatos de contratação analisados
+
+Mesmo como ferramenta interna, a relação entre quem desenvolve e opera o VeroAI e a Motiva pode assumir três formatos:
+
+| Modelo | Como cobra | Base de cálculo neste plano | Quando faz sentido | Ponto de atenção |
+|---|---|---|---|---|
+| **Assinatura (SaaS)** | Valor por usuário ativo por mês | Custo em escala ≈ R$ 8–25/usuário/mês (seção 5.2). Preço de lista de apps de inspeção: R$ 42–287/usuário/mês (referência abaixo) | A Motiva quer pagar conforme a adoção e receber atualizações contínuas | A receita cresce com os usuários, mas 94–97% do custo é pessoa. Um valor mínimo mensal protege |
+| **Licença** | Pagamento anual (ou único) por concessão ou por km monitorado | A Motiva tem 12 concessões e ≈ 4.475 km, que são unidades de cobrança possíveis | A Motiva prefere custo previsível e operar com equipe própria | Suporte e manutenção precisam ser contratados à parte, senão o custo recai sobre quem desenvolveu |
+| **Serviço gerenciado** | Mensalidade fixa por contrato, com nível de serviço (SLA), cobrindo hospedagem, suporte e evolução | O custo vira o piso do contrato: piloto R$ 2,1–5,6 mil/mês e escala R$ 12–38 mil/mês (seção 5) | A Motiva não quer manter um time técnico próprio | Compromisso de nível de serviço e dependência de poucos mantenedores (seção 6) |
+
+**Leitura:** como quase todo o custo é de pessoas, os formatos que cobrem esse custo de forma recorrente (serviço gerenciado e assinatura com valor mínimo) se ajustam melhor que uma licença única. **A proposta do grupo continua sendo a ferramenta interna.** A escolha do formato, e qualquer preço, dependem de validação com a Motiva e com o professor. Este plano não fixa preço: mostra só o piso (o custo, seção 5) e o teto de referência (preços de lista do mercado, abaixo).
+
+### 4.2 Referência de mercado
+
+Preços de lista de produtos maduros e genéricos, não de um protótipo:
 
 | Produto de inspeção em campo (preço de lista, EUA) | US$/usuário/mês | ≈ R$/usuário/mês (câmbio 5,21) |
 |---|---|---|

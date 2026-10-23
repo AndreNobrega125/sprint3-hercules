@@ -11,7 +11,7 @@ O **VeroAI** digitaliza o ciclo de controle de vegetação na faixa de domínio 
 | Entrega | Link |
 |---|---|
 | 📦 **APK para download** | [`veroai-v2.0.0.apk` (GitHub Releases)](https://github.com/AndreNobrega125/sprint3-hercules/releases/download/v2.0.0/veroai-v2.0.0.apk) · [página do release](https://github.com/AndreNobrega125/sprint3-hercules/releases/tag/v2.0.0) |
-| 🎬 **Vídeo de pitch e demonstração** | _adicionar link do YouTube (não listado) após a gravação_ |
+| 🎬 **Vídeo de pitch e demonstração** | [Assistir no YouTube (não listado)](https://youtu.be/UiFV95ehnBA) |
 | 💼 **Plano de negócio** | [PLANO_DE_NEGOCIO.md](PLANO_DE_NEGOCIO.md) |
 | 🧪 **Documento de testes manuais** | [TESTES_MANUAIS.md](TESTES_MANUAIS.md) |
 
@@ -91,7 +91,7 @@ A senha não é validada nesta versão (protótipo com dados mockados): apenas a
 - **Problema:** concessionárias têm obrigação regulatória de manter a faixa de domínio livre de vegetação alta; hoje o controle depende de vistoria manual, papel/planilha e comunicação informal entre Fiscal e equipe de roçada, sem rastreabilidade.
 - **Proposta de valor:** digitalizar o ciclo vistoria → roçada, com classificação de risco automática e padronizada, e cada perfil vendo apenas o que precisa agir.
 - **Público-alvo:** equipes de campo (Fiscal/Trabalhador) e gestão regional da Motiva — ferramenta operacional B2B **interna**.
-- **Valor/receita:** retorno por redução de custo operacional (menos deslocamento em vão), redução de risco regulatório (histórico auditável) e visibilidade gerencial. Licenciamento a outras concessões do grupo é uma possibilidade futura, ainda não fechada.
+- **Valor/receita:** a proposta é a ferramenta interna, com retorno por redução de custo operacional (menos deslocamento em vão), redução de risco regulatório (histórico auditável) e visibilidade gerencial. Formatos de contratação analisados: **assinatura** por usuário, **licença** por concessão ou km e **serviço gerenciado** com mensalidade fixa. A escolha e o preço dependem de validação com a Motiva; o plano mostra só o piso (custo) e o teto de referência (preços de lista do mercado).
 - **Custo estimado (piloto, 1 regional, ~30 usuários):** ≈ R$ 2,1 – 5,6 mil/mês, dos quais só R$ 130–160 são infraestrutura (Supabase/Railway, Cloudflare R2, Firebase Cloud Messaging e Expo EAS, com preços oficiais de 17/10/2026); o resto é suporte de um desenvolvedor a 20–30%. Em escala (~1.500 usuários, malha de ~4.475 km da Motiva) a estimativa é de ≈ R$ 12–38 mil/mês, de baixa confiança. Não são dados internos da Motiva.
 - **Contexto de mercado:** a Motiva já usa satélite e IA para vegetação no RodoAnel (visão de cima). O VeroAI é a ferramenta de campo: o fiscal mede a altura real da vegetação no trecho e o app fecha o ciclo vistoria → roçada, complementando o satélite.
 
